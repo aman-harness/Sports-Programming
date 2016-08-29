@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-typedef vector<int> vi; 
+typedef vector<long long> vi; 
 typedef vector<vi> vvi; 
 typedef pair<int,int> ii;
 typedef vector<ii> vii;
@@ -19,7 +19,7 @@ typedef vector<ii> vii;
 #define input(s, n) for(int i=0;i<n;i++)cin >> s[i];
 #define ff(i, f, t) for(int i=f;i<t;i++)
 #define rep(i,n) for(ll i=0;i<n;i++)
-#define cint(x) int x; cin >> x;
+#define cint(x) ll x; cin >> x;
 
 #define what_is(x) cerr << #x << " is " << x << endl;
 #define dbg(x) ff(i,0,sz(x)) cout << x[i] << " ";
@@ -37,10 +37,10 @@ typedef vector<ii> vii;
 
 #define inf 1e9
 const double eps = 1e-7;
-int m, n, o, p, i, j, k, l, a, b, c;
+ll m, n, o, p, i, j, k, l, a, b, c;
 int main(){
 	std::ios::sync_with_stdio(false);
-	fr; fo;
+	// fr; fo;
 	cin >> m >> n;
 	vi arr(m, 0), sum(m,0); input(arr, m);
 
@@ -48,28 +48,57 @@ int main(){
 	sum[0] = arr[0];
 	ff(i,1,m) sum[i] = sum[i-1] + arr[i];
 	
-	int s = 0;
-	c = sum[m-1] / m;
-	int r = sum[m-1] - c * m;
-	// if(!r) c--;
-	ff(i,0,m-r) s += abs(arr[i]-c);
-	ff(i,m-r,m) s += abs(arr[i]-(c+1));
+	long long cost = 0;
+	long long lo = 0, hi = sz(arr);
+	while(lo < hi -1){
+		// cout << lo << " " << hi << endl;
+		long long mid = lo + hi; mid /= 2;
+		cost = arr[mid] * mid - sum[mid] + arr[mid];
+		// cout << lo << " " << hi << " " << mid << " " << cost <<endl;
+		if(cost <= n) lo = mid;
+		else hi = mid;
+	}
+	cost = n;
+	// cout << lo << endl;
+	ff(i,0,lo){
+		cost -= abs(arr[lo] - arr[i]);
+		arr[i] = arr[lo];
+	} 
+	ff(i,0,lo + 1) arr[i] += cost / (lo + 1);
 
-	s /= 2;
-	if(x >= s){
-		if((x-s)&1) cout << 1 << endl;
-		else cout << 0<< endl;
+	cost %= (lo + 1);
+	ff(i,0,cost) arr[i]++;
+
+	sort(all(arr));
+	// dbg(arr); cout << endl;
+	lo = -1, hi = sz(arr) - 1;
+
+	sum[0] = arr[0];
+	ff(i,1,m) sum[i] = sum[i-1] + arr[i];
+	while(lo < hi -1){
+		// cout << lo << " " << hi << endl;
+		long long mid = lo + hi; mid /= 2;
+		cost = sum[m-1] - sum[mid] - arr[mid] * (m - mid - 1);
+		// cout << lo << " " << hi << " " << mid << " " << cost <<endl;
+		if(cost <= n) hi = mid;
+		else lo = mid;
 	}
-	else{
-		int hi = m - 1;
-		int lo = 0;
-		while(lo < hi){
-			int mid = lo + ( hi - lo ) / 2;
-			int sm = sum[m-1] - sum[mid];
-			sm -= (hi - mid) * arr[mid];
-			if(sm < s) hi = mid;
-			else lo = mi1d;
-		}
-	}
+	cost = n;
+	// cout << hi << endl;
+	ff(i, hi,m){
+		cost -= abs(arr[hi] - arr[i]);
+		arr[i] = arr[hi];
+	} 
+	ff(i,hi,m) arr[i] -= cost / ( m - hi);
+
+	cost %= (m - hi);
+	ff(i,0,cost) arr[hi + i]--;
+
+	sort(all(arr));
+	// dbg(arr); cout << endl;
+
+	cout << arr.back() - arr[0] << endl;
+
+
 	return 0;
 }
