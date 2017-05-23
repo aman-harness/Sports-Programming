@@ -76,6 +76,8 @@ char str[N];
 int main(){
 	std::ios::sync_with_stdio(false);
 	// fr;
-	sc(n); R(i, n) sc(inp[i]);
+	sc(n, m);
+	if(n - m == 0 || n - m == -1) cout << "YES" << endl;
+	else cout << "NO" << endl;
 	return 0;
 }

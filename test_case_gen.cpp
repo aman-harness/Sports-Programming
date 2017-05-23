@@ -1,6 +1,6 @@
 /*
 Author : Aman Singh
-Solution for problem code .
+Solution for problem code Santa Claus and Tangerines.
 */
 
 #include <bits/stdc++.h>
@@ -8,9 +8,9 @@ Solution for problem code .
 using namespace std;
 
 typedef long long ll;
-typedef vector<ll> vi;
+typedef vector<int> vi;
 typedef vector<vi> vvi;
-typedef pair<ll,ll> ii;
+typedef pair<int,int> ii;
 typedef vector<ii> vii;
 #define sz(a) int((a).size())
 // #define mp make_pair
@@ -65,17 +65,31 @@ void sc(int &x,int &y) { sc(x); return sc(y); }
 void sc(int &x,int &y,int &z) { sc(x); sc(y); return sc(z); }
 
 #define inf 2e9
-#define infll 20000000000000000
 const double eps = 1e-7;
 
 #define N 2000005
-int n, k, m;
-int A[N], B[N], inp[N];
+int t, n, k, i, j, m, x;
+int inp[N], A[N], B[N];
 char str[N];
-
+map<string, int> mp;
+int check(string & from, string & to){
+	int x = 0;
+	if(from == to) return 1;
+	while(from.find(to, x) != -1){
+		int pos = from.find(to, x);
+		if(pos == 0 && !isalpha(from[to.size()]) &&!isdigit(from[to.size()])) return 1;
+		if(pos == from.size() - to.size() && !isalpha(from[pos - 1]) &&!isdigit(from[pos - 1])) return 1;
+		if(!isalpha(from[pos - 1]) && !isdigit(from[pos - 1]) && !isalpha(from[pos + sz(to)]) && !isdigit(from[sz(to)])) return 1;
+		x++;
+	}
+	return 0;
+}
 int main(){
 	std::ios::sync_with_stdio(false);
-	// fr;
-	sc(n); R(i, n) sc(inp[i]);
+	srand (time(NULL));
+	fr; fo;
+	n = 100000;
+	cout << n << endl;
+	for(int i = 0; i < n; i++) cout << rand() % 100000 << " ";
 	return 0;
 }

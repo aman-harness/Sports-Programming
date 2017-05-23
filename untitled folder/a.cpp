@@ -76,6 +76,15 @@ char str[N];
 int main(){
 	std::ios::sync_with_stdio(false);
 	// fr;
-	sc(n); R(i, n) sc(inp[i]);
+
+	ll x, y, a, b, c, n;
+	cin >> x >> y;
+	cin >> n;
+	while(n--){
+		cin >> b >> c;
+		x -= b; y -= c;
+	}
+	cout << x _ y << endl;
+
 	return 0;
 }

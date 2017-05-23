@@ -69,13 +69,22 @@ void sc(int &x,int &y,int &z) { sc(x); sc(y); return sc(z); }
 const double eps = 1e-7;
 
 #define N 2000005
-int n, k, m;
+int n, k, m, l;
 int A[N], B[N], inp[N];
 char str[N];
 
 int main(){
 	std::ios::sync_with_stdio(false);
 	// fr;
-	sc(n); R(i, n) sc(inp[i]);
+	sc(n, l); R(i, n) sc(A[i]); R(i, n) sc(B[i]);
+
+	R(i, n){
+		int diff = B[i] - A[0];
+		R(j, n){
+			if(A[j] != (B[(j + i) % n] - diff + l) % l) break;
+			if(j == n - 1) {cout << "YES"; return 0;}
+		} 
+	}
+	cout << "NO\n";
 	return 0;
 }

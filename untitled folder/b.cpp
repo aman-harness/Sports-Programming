@@ -70,12 +70,39 @@ const double eps = 1e-7;
 
 #define N 2000005
 int n, k, m;
-int A[N], B[N], inp[N];
+// int A[N], B[N], inp[N];
 char str[N];
 
 int main(){
 	std::ios::sync_with_stdio(false);
 	// fr;
-	sc(n); R(i, n) sc(inp[i]);
+	ll n, c, a, b;
+	cin >> n >> c;
+	vii inp;
+	R(i, c){
+		cin >> a >> b;
+		inp.pb({b, a});
+	}
+
+	sort(all(inp));
+	reverse(all(inp));
+
+	ll ans = 0;
+	int i = 0;
+	ll k = 0;
+	while(i <= inp.size() && k <= n){
+		Error(min(n - k, inp[i].se) , inp[i].fi)
+		ans += min(n - k, inp[i].se) * inp[i].fi;
+		k += inp[i].se;
+		i++;
+	}
+
+
+	cout << ans << endl;
+
+
+
+
+
 	return 0;
 }

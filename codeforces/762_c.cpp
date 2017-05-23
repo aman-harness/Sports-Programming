@@ -76,6 +76,49 @@ char str[N];
 int main(){
 	std::ios::sync_with_stdio(false);
 	// fr;
-	sc(n); R(i, n) sc(inp[i]);
+	string a, b;
+	cin >> a >> b;
+
+	int i = 0;, j = 0;
+	vi f(sz(b), -1), b(sz(b), -1);
+	while(i < sz(a) && j < sz(b)){
+		while(i < sz(a) && a[i] != b[j]) i++;
+		if(i < sz(a)){
+			f[j] = i;
+			j++;
+		}
+	}
+	j = sz(b) - 1, i = sz(a) - 1;
+	while(i >= 0 && j >= 0){
+		while(i >= 0 && a[i] != b[j]) i--;
+		if(i >= 0){
+			b[j] = i;
+			j--;
+		}
+	}
+
+	int from = 0, to = 0;
+	i = 0;
+	
+	while(i < sz(f) && f[i] != -1) i++;
+	// Excluding to
+	from = i, to = sz(f);
+	
+	i = sz(f) - 1;
+	while(i >= 0 && b[i] != -1) i--;
+	if(n - i + 1 > ){
+		from = 0, to = 
+	}
+
+	i = 0, j = sz(f) - 1;
+	while(i < j && (f[i] != -1 && b[j] != -1) && (f[i] < b[j])){
+		i++;
+		j--;
+	}
+
+	if(f[i] == -1 && i) i--;
+	if(b[j] == -1 && j != n - 1) j++;
+
+
 	return 0;
 }

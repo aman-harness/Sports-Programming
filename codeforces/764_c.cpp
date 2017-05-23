@@ -69,13 +69,40 @@ void sc(int &x,int &y,int &z) { sc(x); sc(y); return sc(z); }
 const double eps = 1e-7;
 
 #define N 2000005
-int n, k, m;
-int A[N], B[N], inp[N];
+int n, k, m, to, from;
+vi graph[N], tgraph[N];
 char str[N];
+
+edfs(int from, int col){
+
+}
+
+int dfs(int from, int col = -1){
+	R(i, sz(graph[from])){
+		
+	}
+}
 
 int main(){
 	std::ios::sync_with_stdio(false);
 	// fr;
-	sc(n); R(i, n) sc(inp[i]);
+	cin >> n;
+	R(i, n){
+		cin >> from >> to;
+		from--; to--;
+		graph[from].pb(to);
+		graph[to].pb(from);
+	}
+
+	dfs(0);
+
 	return 0;
 }
+
+
+
+
+
+
+
+

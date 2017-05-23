@@ -69,13 +69,43 @@ void sc(int &x,int &y,int &z) { sc(x); sc(y); return sc(z); }
 const double eps = 1e-7;
 
 #define N 2000005
-int n, k, m;
-int A[N], B[N], inp[N];
+int n, k, m, l, r;
+
 char str[N];
+
+bool comp(pair<int, ii> a, pair<int, ii> b){
+	if(a.se.se < b.se.se) return 1;
+	else if(a.se.se == b.se.se) return a.se.fi < b.se.fi;
+	return 0;
+}
 
 int main(){
 	std::ios::sync_with_stdio(false);
 	// fr;
-	sc(n); R(i, n) sc(inp[i]);
+	cin >> n  >> l >> r;
+	vector<pair<int, ii>> inp(n, {0, ii(0, 0)}); vii out(n, ii(0, 0));
+	R(i, n) inp[i].fi = i;
+	R(i, n) {cin >> inp[i].se.fi;}
+	R(i, n) {cin >> inp[i].se.se;}
+
+	sort(all(inp), comp);
+
+	// R(i, n) cout << inp[i].se.fi << "-" << inp[i].se.se << " ";
+	// cout << endl;
+
+	int mini = -inf;
+	int to = r, from = l;
+	R(i, n){
+		int xx = inp[i].se.fi;
+		smax(++mini, l - xx);
+		if(mini > r - xx){
+			cout << "-1"; return 0;
+		} 
+		out[i].fi = inp[i].fi;
+		out[i].se = mini + xx;
+		// Error(out[i].fi, out[i].se);
+	}
+	sort(all(out));
+	R(i, n) cout << out[i].se << " ";
 	return 0;
 }

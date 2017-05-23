@@ -7,10 +7,10 @@ Solution for problem code .
 #include <unordered_map>
 using namespace std;
 
-typedef long long ll;
-typedef vector<ll> vi;
+typedef int ll;
+typedef vector<int> vi;
 typedef vector<vi> vvi;
-typedef pair<ll,ll> ii;
+typedef pair<int,int> ii;
 typedef vector<ii> vii;
 #define sz(a) int((a).size())
 // #define mp make_pair
@@ -64,18 +64,72 @@ void sc(char &x) {scanf("%c", &x); }
 void sc(int &x,int &y) { sc(x); return sc(y); }
 void sc(int &x,int &y,int &z) { sc(x); sc(y); return sc(z); }
 
-#define inf 2e9
+#define inf 1e8
 #define infll 20000000000000000
 const double eps = 1e-7;
 
 #define N 2000005
 int n, k, m;
 int A[N], B[N], inp[N];
-char str[N];
+// char str[N];
 
 int main(){
 	std::ios::sync_with_stdio(false);
 	// fr;
-	sc(n); R(i, n) sc(inp[i]);
+	int i, j;
+	int n, m; cin >> n >> m;
+
+	vector<string> str(n, string()); R(i, n) cin >> str[i];
+	// error(str[0]);
+	vector<pair<int, ii>> dp(n, {inf, {inf, inf}});
+	// 1st digit, 2nd - lowercase, 3rd - special char
+
+	R(i, n){
+		R(j, m){
+			if(islower(str[i][j])){
+				smin(dp[i].se.fi, j);
+			}
+			if(isdigit(str[i][j])){
+				smin(dp[i].fi, j);
+			}
+			if(str[i][j] == '#' || str[i][j] == '*' || str[i][j] == '&'){
+				smin(dp[i].se.se, j);
+			}
+		}
+		reverse(all(str[i]));
+
+		R(j, m){
+			if(islower(str[i][j])){
+				smin(dp[i].se.fi, j + 1);
+			}
+			if(isdigit(str[i][j])){
+				smin(dp[i].fi, j + 1);
+			}
+			if(str[i][j] == '#' || str[i][j] == '*' || str[i][j] == '&'){
+				smin(dp[i].se.se, j + 1);
+			}
+		}
+	}
+	// R(i, n){
+	// cout <<	dp[i].fi _ dp[i].se.fi _ dp[i].se.se;
+	// 	cout << endl;
+	// }
+
+	sort(all(dp));
+
+	ll ans = inf;
+
+	F(i, 0, n){
+		F(j, 0, n){
+			F(k, 0, n){
+				if(i == j || i == k || j == k) continue;
+				ll xx = ll(dp[i].fi + dp[j].se.fi + dp[k].se.se);
+				// error(xx);
+				smin(ans, xx);
+			}
+		}
+	}
+	if(ans > inf) cout << -1 << endl; else
+	cout << ans << endl;
 	return 0;
 }
